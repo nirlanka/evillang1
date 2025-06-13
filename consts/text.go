@@ -1,3 +1,3 @@
 package consts
 
-const Tab byte = '\t'
+const Tab rune = '\t'

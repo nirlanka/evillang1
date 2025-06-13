@@ -44,14 +44,26 @@ func IsDigit(r rune) bool {
 	return unicode.IsDigit(r)
 }
 
-func GetName() {
+func GetName() rune {
 	if !IsAlpha(state.Look) {
 		Expected("Name")
 	}
 
-	// test
-	state.GetName = strings.ToUpper(string(state.Look))
+	res := []rune(strings.ToUpper(string(state.Look)))
 	GetChar()
+
+	return res[0]
+}
+
+func GetNum() rune {
+	if !IsDigit(state.Look) {
+		Expected("Intgeger")
+	}
+
+	res := state.Look
+	GetChar()
+
+	return res
 }
 
 func Write(a ...any) {
@@ -59,7 +71,7 @@ func Write(a ...any) {
 }
 
 func Emit(s string) {
-	Write(consts.Tab, s)
+	Write(string(consts.Tab), s)
 }
 
 func EmitLn(s string) {
