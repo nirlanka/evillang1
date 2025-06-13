@@ -1,10 +1,5 @@
 package state
 
-import (
-	"bufio"
-	"os"
-)
+var IsDebug bool
 
 var Look rune
-
-var Reader = bufio.NewReader(os.Stdin)

@@ -2,6 +2,7 @@ package source
 
 import (
 	"evil/lang1/consts"
+	"evil/lang1/input"
 	"evil/lang1/state"
 	"fmt"
 	"strings"
@@ -10,17 +11,19 @@ import (
 
 func GetChar() {
 	var err error
-	state.Look, _, err = state.Reader.ReadRune()
+	state.Look, err = input.ReadRune()
 	if err != nil {
 		AbortError(err)
 	}
 }
 
 func AbortCustom(s string) {
+	write("\n")
 	panic("Error: " + s + ".")
 }
 
 func AbortError(err error) {
+	write("\n")
 	panic(err)
 }
 
@@ -36,28 +39,29 @@ func Match(r rune) {
 	}
 }
 
-func IsAlpha(r rune) bool {
+func isAlpha(r rune) bool {
 	return unicode.IsLetter(r)
 }
 
-func IsDigit(r rune) bool {
+func isDigit(r rune) bool {
 	return unicode.IsDigit(r)
 }
 
 func GetName() rune {
-	if !IsAlpha(state.Look) {
+	if !isAlpha(state.Look) {
 		Expected("Name")
 	}
 
-	res := []rune(strings.ToUpper(string(state.Look)))
+	s := strings.ToUpper(string(state.Look))[0]
+	res := rune(s)
 	GetChar()
 
-	return res[0]
+	return res
 }
 
 func GetNum() rune {
-	if !IsDigit(state.Look) {
-		Expected("Intgeger")
+	if !isDigit(state.Look) {
+		Expected("Integer")
 	}
 
 	res := state.Look
@@ -66,15 +70,15 @@ func GetNum() rune {
 	return res
 }
 
-func Write(a ...any) {
+func write(a ...any) {
 	fmt.Print(a...)
 }
 
 func Emit(s string) {
-	Write(string(consts.Tab), s)
+	write(string(consts.Tab), s)
 }
 
 func EmitLn(s string) {
 	Emit(s)
-	Write('\n')
+	write("\n")
 }
