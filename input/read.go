@@ -7,17 +7,18 @@ import (
 )
 
 var reader *bufio.Reader
+var file *os.File
 
 func Setup() {
 	var input io.Reader
 
 	if len(os.Args) > 1 {
-		f, err := os.Open(os.Args[1])
+		var err error
+		file, err = os.Open(os.Args[1])
 		if err != nil {
 			panic(err)
 		}
-		defer f.Close()
-		input = f
+		input = file
 	} else {
 		input = os.Stdin
 	}
@@ -33,4 +34,8 @@ func ReadRune() (rune, error) {
 	}
 
 	return ch, err
+}
+
+func Close() {
+	file.Close()
 }

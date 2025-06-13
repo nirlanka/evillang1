@@ -10,14 +10,16 @@ import (
 func main() {
 	fmt.Println("lang1>>")
 
+	input.Setup()
+
 	Init()
 	ast.Expression()
+
+	input.Close()
 
 	fmt.Println()
 }
 
 func Init() {
-	input.Setup()
-
 	source.GetChar()
 }
