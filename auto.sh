@@ -1,8 +1,4 @@
 #!/bin/zsh
 # auto.sh
-find . -type f \( -name "*.go" -o -name "*.tmpl" \) | \
+find . -type f \( -name "*.go" -o -name "*.tmpl" -o -name "*.txt" \) | \
 	entr -r ./buildrun.sh
-
-## Source: https://www.reddit.com/r/golang/comments/32mdo2/reliable_autocompileandrun_your_project_on_save/
-
-## brew install entr
